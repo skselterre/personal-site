@@ -1,8 +1,16 @@
-export type Role = { company: string; role: string; dates: string; bullets: string[] };
+import type { StaticImageData } from "next/image";
+import promevo from "@/assets/logo-promevo.png";
+import nerdery from "@/assets/logo-nerdery.png";
+import bytecode from "@/assets/logo-bytecode.png";
+import csx from "@/assets/logo-csx.png";
+import td from "@/assets/logo-td.png";
+
+export type Role = { company: string; role: string; dates: string; bullets: string[]; logo?: StaticImageData };
 
 export const experience: Role[] = [
   {
     company: "Promevo",
+    logo: promevo,
     role: "Senior Solutions Architect, Cloud & AI",
     dates: "Oct 2025 – Present",
     bullets: [
@@ -15,6 +23,7 @@ export const experience: Role[] = [
   },
   {
     company: "Nerdery",
+    logo: nerdery,
     role: "Senior Data Analyst Consultant",
     dates: "Jan 2025 – Oct 2025",
     bullets: [
@@ -27,6 +36,7 @@ export const experience: Role[] = [
   },
   {
     company: "Bytecode IO",
+    logo: bytecode,
     role: "Senior Data Analyst Consultant",
     dates: "Jul 2021 – Nov 2024",
     bullets: [
@@ -39,6 +49,7 @@ export const experience: Role[] = [
   },
   {
     company: "CSX Technology",
+    logo: csx,
     role: "Tableau Design & Development Lead; IT Analyst",
     dates: "Jul 2016 – Jul 2021",
     bullets: [
@@ -49,6 +60,7 @@ export const experience: Role[] = [
   },
   {
     company: "TD Bank Group",
+    logo: td,
     role: "Systems Developer II",
     dates: "Nov 2010 – Aug 2015",
     bullets: ["Web services developer using Java EE, XML, and SOA for real-time transactions across all business lines."],
