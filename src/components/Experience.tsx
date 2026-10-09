@@ -17,7 +17,7 @@ export default function Experience() {
                   src={r.logo}
                   alt=""
                   aria-hidden
-                  className="pointer-events-none absolute right-0 top-0 h-16 w-36 select-none object-contain object-right-top opacity-[0.08] transition-opacity duration-500 mask-l-from-20% mask-b-from-50% group-hover:opacity-[0.14] md:h-28 md:w-56"
+                  className="pointer-events-none absolute right-0 top-0 h-16 w-36 select-none object-contain object-right-top opacity-[0.2] transition-opacity duration-500 mask-l-from-60% mask-b-from-50% group-hover:opacity-[0.4] md:h-28 md:w-56"
                 />
               )}
               <Reveal>
