@@ -15,7 +15,6 @@ export const profile = {
     "Picking the right infrastructure is the easy half. The AI and data projects I've seen succeed also had clear governance and people ready to use what was built.",
   ],
   stack: ["Google Cloud", "Gemini Enterprise", "ADK", "MCP", "Apigee", "Looker", "BigQuery", "Tableau", "dbt"],
-  certs: ["AWS Partner Accreditation (Technical)", "Tableau Desktop Specialist", "dbt Fundamentals", "Navy AEGIS Excellence Award"],
   education: [
     { school: "University of Maine at Farmington", detail: "BS Computer Science, 2006 to 2008" },
     { school: "Rochester Institute of Technology", detail: "Software Engineering, 2004 to 2005" },
@@ -23,13 +22,16 @@ export const profile = {
   writing: {
     title: "Writing",
     blurb: "Notes on practical AI deployment and getting more out of Looker.",
-    items: ["[PLACEHOLDER] Post title one", "[PLACEHOLDER] Post title two"],
+    items: [
+      { title: "Bring Your Own MCP: Why Gemini Enterprise's Open Connector Edge Matters", href: "https://promevo.com/blog/byo-mcp-gemini-enterprise-open-connectors" },
+      { title: "Layer Your LookML: A Practitioner's Guide to Refinements in Looker Core", href: "https://promevo.com/blog/looker-core-optimization-guide" },
+    ],
     href: "#",
   },
   podcast: {
     title: "Podcast",
     blurb: "I co-host a show about classic gaming history and the people behind it.",
-    items: ["[PLACEHOLDER] Show name", "[PLACEHOLDER] Latest episode"],
+    items: [{ title: "[PLACEHOLDER] Show name" }, { title: "[PLACEHOLDER] Latest episode" }] as { title: string; href?: string }[],
     href: "#",
   },
   contact: "If you're working on cloud or AI architecture and want a second set of eyes, email me.",

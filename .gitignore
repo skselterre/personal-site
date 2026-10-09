@@ -42,3 +42,5 @@ next-env.d.ts
 
 # private source
 Profile.pdf
+
+/resources

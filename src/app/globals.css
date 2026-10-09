@@ -9,6 +9,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --animate-marquee: marquee 36s linear infinite;
+  @keyframes marquee { to { transform: translateX(-50%); } }
+}
+
 html {
   scroll-behavior: smooth;
   background: #050505;
