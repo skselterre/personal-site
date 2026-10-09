@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const links = [["Work", "#work"], ["Experience", "#experience"], ["Writing", "#writing"], ["Contact", "#contact"]];
+const links = [["Work", "#work"], ["Experience", "#experience"], ["Contact", "#contact"]];
 const ease = "ease-[cubic-bezier(0.32,0.72,0,1)]";
 
 export default function Nav() {

@@ -11,8 +11,9 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/skselterre",
   github: "https://github.com/skselterre",
   about: [
-    "I work at the point where a business plan meets the cloud. At Promevo I partner with enterprise technology leaders and their engineering teams to design and roll out Google Cloud and AI solutions: agent platforms on the Agent Development Kit and Model Context Protocol, API integrations through Apigee, and analytics on Looker and BigQuery.",
-    "Picking the right infrastructure is the easy half. The AI and data projects I've seen succeed also had clear governance and people ready to use what was built.",
+    "I bridge the gap between ambitious business strategy and enterprise-grade cloud architecture.",
+    "As a Senior Solutions Architect, I partner with enterprise technology leaders, executives, and engineering teams to design, scope, and operationalize modern cloud and AI solutions. My focus centers on transforming complex enterprise workflows through Google Cloud Platform (GCP), Gemini Enterprise, autonomous agent development, and governed data architectures.",
+    "Whether architecting agentic platforms using the Google Agent Development Kit (ADK) and Model Context Protocol (MCP), designing robust API integrations with Apigee, or optimizing enterprise analytics via Looker Core and BigQuery, I build scalable systems that deliver measurable ROI.",
   ],
   stack: ["Google Cloud", "Gemini Enterprise", "ADK", "MCP", "Apigee", "Looker", "BigQuery", "Tableau", "dbt"],
   education: [
@@ -26,13 +27,6 @@ export const profile = {
       { title: "Bring Your Own MCP: Why Gemini Enterprise's Open Connector Edge Matters", href: "https://promevo.com/blog/byo-mcp-gemini-enterprise-open-connectors" },
       { title: "Layer Your LookML: A Practitioner's Guide to Refinements in Looker Core", href: "https://promevo.com/blog/looker-core-optimization-guide" },
     ],
-    href: "#",
-  },
-  podcast: {
-    title: "Podcast",
-    blurb: "I co-host a show about classic gaming history and the people behind it.",
-    items: [{ title: "[PLACEHOLDER] Show name" }, { title: "[PLACEHOLDER] Latest episode" }] as { title: string; href?: string }[],
-    href: "#",
   },
   contact: "If you're working on cloud or AI architecture and want a second set of eyes, email me.",
 };

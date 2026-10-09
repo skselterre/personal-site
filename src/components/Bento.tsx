@@ -26,7 +26,7 @@ export default function Bento() {
     <section className="px-4 py-32 md:px-8">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-12">
         <Reveal className="md:col-span-8 md:row-span-2"><Card className="h-full">
-          <Eyebrow>Now</Eyebrow>
+          <Eyebrow>Who I Am</Eyebrow>
           <div className="mt-6 space-y-5 text-lg text-white/70 md:text-xl">{profile.about.map((p) => <p key={p}>{p}</p>)}</div>
         </Card></Reveal>
         <Reveal className="md:col-span-4" delay={100}><Card className="h-full">
@@ -39,7 +39,7 @@ export default function Bento() {
           <div className="relative flex h-full min-h-56 flex-col justify-end">
             <Eyebrow>Based in</Eyebrow>
             <p className="mt-6 text-2xl tracking-tight">{profile.location}</p>
-            <p className="mt-2 text-sm text-white/70">Open to conversations.</p>
+            <p className="mt-2 text-sm text-white/70">The City of Bridges, sun-kissed and thriving.</p>
           </div>
         </Card></Reveal>
         <Reveal className="md:col-span-12" delay={100}><Card className="h-full">
