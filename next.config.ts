@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     rules: { "*.css": { loaders: ["@tailwindcss/turbopack"], as: "*.css" } },
   },
-  basePath: process.env.GITHUB_ACTIONS ? "/personal-site" : "",
 };
 
 export default nextConfig;
