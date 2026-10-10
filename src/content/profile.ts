@@ -5,7 +5,7 @@ export const profile = {
   description:
     "Shane Selterre is a Senior Solutions Architect designing Google Cloud and generative AI systems for enterprise teams.",
   h1: "Cloud and AI architecture, built to ship.",
-  sub: "I'm Shane Selterre, a Senior Solutions Architect at Promevo. I work with executives and engineering teams to scope, design, and deliver Google Cloud and generative AI systems.",
+  sub: "I'm Shane Selterre, a Senior Solutions Architect with 20 years in the industry. I've worked with everything from iSeries mainframes to cloud-native generative AI, and everything in between. I collaborate with executives and engineering teams across industries to scope, design, and deliver scalable, resilient solutions to support mission-critical systems.",
   location: "Jacksonville, Florida",
   email: "shane@selterre.com",
   linkedin: "https://www.linkedin.com/in/skselterre",
