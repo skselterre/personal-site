@@ -1,35 +1,64 @@
 import Image from "next/image";
 import { experience } from "@/content/experience";
-import Eyebrow from "./Eyebrow";
+import { ChevronDown } from "./icons";
 import Reveal from "./Reveal";
+import Section from "./Section";
+
+// The two most recent roles show every bullet; older roles show their lead bullet and disclose the rest.
+const OPEN_ROLES = 2;
+const bullets = "list-disc space-y-2 pl-5 text-muted marker:text-line-strong";
 
 export default function Experience() {
   return (
-    <section id="experience" className="px-4 py-32 md:px-8">
-      <div className="mx-auto max-w-6xl">
-        <Reveal><Eyebrow>Experience</Eyebrow><h2 className="mt-6 text-4xl font-medium tracking-tighter md:text-6xl">Where I've worked.</h2></Reveal>
-        <ol className="mt-16 border-l border-white/10">
-          {experience.map((r) => (
-            <li key={r.company} className="group relative pb-14 pl-8 last:pb-0 md:pl-12">
-              <span className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full border border-white/30 bg-[#050505]" />
-              {r.logo && (
-                <Image
-                  src={r.logo}
-                  alt=""
-                  aria-hidden
-                  className="pointer-events-none absolute right-0 top-0 h-16 w-36 select-none object-contain object-right-top opacity-[0.2] transition-opacity duration-500 mask-l-from-60% mask-b-from-50% group-hover:opacity-[0.4] md:h-28 md:w-56"
-                />
-              )}
-              <Reveal>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/40">{r.dates}</p>
-                <h3 className="mt-2 text-2xl font-medium tracking-tight">{r.company}</h3>
-                <p className="text-white/60">{r.role}</p>
-                <ul className="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-sm text-white/60 marker:text-white/20">{r.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
-              </Reveal>
-            </li>
-          ))}
+    <Section id="experience" title="Where I’ve worked.">
+        <ol>
+          {experience.map((r, i) => {
+            const [lead, ...rest] = r.bullets;
+            const open = i < OPEN_ROLES;
+            return (
+              <li key={r.company} className="relative pb-14 pl-8 last:pb-0 md:pl-12">
+                {i < experience.length - 1 && (
+                  <>
+                    <span aria-hidden className="absolute -bottom-2 left-0 top-2 w-px bg-line-strong" />
+                    <span aria-hidden className="trace absolute -bottom-2 left-0 top-2 w-px bg-accent" />
+                  </>
+                )}
+                <span aria-hidden className="node absolute -left-[4.5px] top-2 h-2.5 w-2.5 rounded-full border border-accent bg-accent" />
+                <Reveal className="md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,5fr)] md:gap-x-10 xl:grid-cols-[minmax(0,2fr)_minmax(0,5fr)_7rem]">
+                  <div>
+                    <p className="font-mono text-sm tabular-nums text-muted">{r.dates}</p>
+                    <h3 className="mt-2 text-2xl font-medium tracking-tight">{r.company}</h3>
+                    <p className="mt-1 text-muted">{r.role}</p>
+                  </div>
+                  <div className="mt-4 max-w-2xl md:mt-1">
+                    <ul className={bullets}>
+                      <li className="text-fg">{lead}</li>
+                      {open && rest.map((b) => <li key={b}>{b}</li>)}
+                    </ul>
+                    {!open && rest.length > 0 && (
+                      <details className="group">
+                        <summary className="ml-5 inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-muted transition-colors duration-200 hover:text-fg [&::-webkit-details-marker]:hidden">
+                          <span className="group-open:hidden">Show {rest.length} more<span className="sr-only"> for {r.company}</span></span>
+                          <span className="hidden group-open:inline">Show less<span className="sr-only"> for {r.company}</span></span>
+                          <span className="transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"><ChevronDown /></span>
+                        </summary>
+                        <ul className={bullets}>{rest.map((b) => <li key={b}>{b}</li>)}</ul>
+                      </details>
+                    )}
+                  </div>
+                  {r.logo && (
+                    <Image
+                      src={r.logo}
+                      alt=""
+                      aria-hidden
+                      className="pointer-events-none hidden h-14 w-full max-w-44 select-none justify-self-end object-contain object-right-top opacity-30 invert dark:invert-0 xl:block"
+                    />
+                  )}
+                </Reveal>
+              </li>
+            );
+          })}
         </ol>
-      </div>
-    </section>
+    </Section>
   );
 }

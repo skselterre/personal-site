@@ -1,19 +1,17 @@
-import Bento from "@/components/Bento";
+import Bento, { Writing } from "@/components/Bento";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
-import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
 
+// Projects is hidden until real entries replace the placeholders in content/projects.ts.
 export default function Home() {
   return (
     <>
       <Hero />
       <Bento />
-      <Projects />
+      <Writing />
       <Experience />
       <Contact />
-      <Footer />
     </>
   );
 }

@@ -1,57 +1,199 @@
 @import "tailwindcss";
 
-:root {
-  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:where([data-theme=light], [data-theme=light] *));
+
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0e14;
+  --surface: #11151d;
+  --fg: #e8ecf2;
+  --muted: #9aa4b2;
+  --line: rgb(255 255 255 / 0.1);
+  --line-strong: rgb(255 255 255 / 0.24);
+  --accent: #6aa8ff;
+  --on-accent: #0b0e14;
+  --grid: rgb(106 168 255 / 0.13);
+  --shadow: rgb(0 0 0 / 0.55);
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --fg: #0b0e14;
+  --muted: #4a5463;
+  --line: rgb(11 14 20 / 0.12);
+  --line-strong: rgb(11 14 20 / 0.3);
+  --accent: #1d4ed8;
+  --on-accent: #ffffff;
+  --grid: rgb(29 78 216 / 0.12);
+  --shadow: rgb(11 14 20 / 0.18);
 }
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-grid: var(--grid);
 }
 
 @theme {
-  --animate-marquee: marquee 36s linear infinite;
-  @keyframes marquee { to { transform: translateX(-50%); } }
+  --tracking-display: -0.04em;
+}
+
+/* Display type: the page's two heading sizes. */
+@utility text-display {
+  font-size: clamp(2.75rem, 7.5vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: var(--tracking-display);
+  font-weight: 500;
+}
+@utility text-section {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  font-weight: 500;
+}
+
+/* Drafting sheet: 12 columns (4 on phones) crossed by 6rem rows. Behind the hero and the contact close. */
+.sheet {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 25% 100%, 100% 6rem;
+}
+@media (min-width: 48rem) {
+  .sheet { background-size: calc(100% / 12) 100%, 100% 6rem; }
 }
 
 html {
   scroll-behavior: smooth;
-  background: #050505;
+  scroll-padding-top: 4.5rem;
+  scroll-padding-bottom: 5.5rem;
+  scrollbar-gutter: stable;
+  background: var(--bg);
+  scrollbar-color: var(--line-strong) var(--bg);
+  accent-color: var(--accent);
+  caret-color: var(--accent);
 }
 
 body {
-  background: #050505;
-  color: rgba(255, 255, 255, 0.92);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+::selection {
+  background: color-mix(in oklab, var(--accent) 32%, transparent);
+  color: var(--fg);
 }
 
-.reveal {
+a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Hero entrance: CSS only, so first paint never waits on JavaScript. The h1 only moves, so it paints at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise 700ms var(--ease-out) both; }
+  .rise-soft { animation: rise-soft 700ms var(--ease-out) both; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(1rem); } }
+@keyframes rise-soft { from { transform: translateY(0.75rem); } }
+
+/* Below-the-fold reveal. Reveal.tsx adds .reveal-pending only to off-screen blocks after hydration,
+   so content is visible by default and never depends on JS loading. */
+.reveal-pending {
   opacity: 0;
-  transform: translateY(4rem);
-  filter: blur(12px);
+  transform: translateY(1.5rem);
   transition:
-    opacity 800ms var(--ease-spring),
-    transform 800ms var(--ease-spring),
-    filter 800ms var(--ease-spring);
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
 }
-.reveal.is-visible {
+.reveal-pending.is-visible {
   opacity: 1;
   transform: none;
-  filter: none;
+}
+
+/* Brief cross-fade while the theme toggle swaps palettes. */
+.theme-fade,
+.theme-fade * {
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out !important;
+}
+
+/* Experience timeline: each connector segment traces in accent as it crosses a line 80% down the
+   viewport, and the node it reaches fills at the same moment. Without support (or with reduced motion)
+   the diagram renders complete: full accent segments, filled nodes. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .trace {
+      transform-origin: top;
+      animation: trace linear both;
+      animation-timeline: view(block 0% 20%);
+      animation-range: entry 0% entry 100%;
+    }
+    .node {
+      animation: node linear both;
+      animation-timeline: view(block 0% 20%);
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+@keyframes trace {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes node {
+  from { background-color: var(--bg); border-color: var(--line-strong); }
+  to { background-color: var(--accent); border-color: var(--accent); }
+}
+
+/* While the mobile menu is open it owns the screen: hide the floating theme switch and skip link. */
+body:has(#mobile-menu:not([inert])) :is(.theme-float, [href="#main"]) {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .reveal-pending { opacity: 1; transform: none; transition: none; }
+  .theme-fade, .theme-fade * { transition: none !important; }
+}
+
+@media print {
+  :root,
+  :root[data-theme] {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --fg: #000000;
+    --muted: #333a45;
+    --line: rgb(0 0 0 / 0.18);
+    --line-strong: rgb(0 0 0 / 0.4);
+    --accent: #1d4ed8;
+    --on-accent: #ffffff;
+    --grid: transparent;
+  }
+  nav, .theme-float, [href="#main"] { display: none !important; }
+  .reveal-pending { opacity: 1 !important; transform: none !important; transition: none !important; }
+  #top { min-height: auto; padding-top: 0; }
 }

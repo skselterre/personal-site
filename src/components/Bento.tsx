@@ -6,12 +6,13 @@ import tableau from "@/assets/badge-tableau.png";
 import aws from "@/assets/badge-aws.png";
 import dbt from "@/assets/badge-dbt.png";
 import { profile } from "@/content/profile";
-import Card from "./Card";
-import Eyebrow from "./Eyebrow";
 import { ArrowUpRight } from "./icons";
 import Reveal from "./Reveal";
+import Section from "./Section";
 
-const chip = "rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-white/70";
+const cell = "relative border-b border-r border-line p-7 md:p-9";
+const heading = "text-xl font-medium tracking-tight";
+const chip = "rounded-xs border border-line px-2.5 py-1 text-sm text-muted";
 
 const certs = [
   { title: "Google Cloud Professional Data Engineer", badge: gcp },
@@ -23,56 +24,65 @@ const certs = [
 
 export default function Bento() {
   return (
-    <section className="px-4 py-32 md:px-8">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-12">
-        <Reveal className="md:col-span-8 md:row-span-2"><Card className="h-full">
-          <Eyebrow>Who I Am</Eyebrow>
-          <div className="mt-6 space-y-5 text-lg text-white/70 md:text-xl">{profile.about.map((p) => <p key={p}>{p}</p>)}</div>
-        </Card></Reveal>
-        <Reveal className="md:col-span-4" delay={100}><Card className="h-full">
-          <Eyebrow>Stack</Eyebrow>
-          <ul className="mt-6 flex flex-wrap gap-2">{profile.stack.map((s) => <li key={s} className={chip}>{s}</li>)}</ul>
-        </Card></Reveal>
-        <Reveal className="md:col-span-4" delay={200}><Card className="h-full" innerClassName="relative overflow-hidden">
-          <Image src={jacksonville} alt="" fill className="object-cover" />
-          <div aria-hidden className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-black/10" />
-          <div className="relative flex h-full min-h-56 flex-col justify-end">
-            <Eyebrow>Based in</Eyebrow>
-            <p className="mt-6 text-2xl tracking-tight">{profile.location}</p>
-            <p className="mt-2 text-sm text-white/70">The City of Bridges, sun-kissed and thriving.</p>
+    <Section id="about" title="Who I am.">
+        <div className="grid grid-cols-1 border-l border-t border-line md:grid-cols-12">
+          <div className={`${cell} md:col-span-8 md:row-span-2`}>
+            <Reveal className="max-w-[65ch] space-y-5 text-lg text-muted">
+              {profile.about.map((p, i) => <p key={p} className={i === 0 ? "text-xl text-fg" : undefined}>{p}</p>)}
+            </Reveal>
           </div>
-        </Card></Reveal>
-        <Reveal className="md:col-span-12" delay={100}><Card className="h-full">
-          <Eyebrow>Certifications</Eyebrow>
-          <div className="-mx-7 mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-x-auto md:-mx-9">
-            <ul className="flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:animate-none">
-              {[...certs, ...certs].map((c, i) => {
-                const dup = i >= certs.length;
-                return (
-                  <li key={i} aria-hidden={dup || undefined} className={`flex items-center gap-4 pr-16 ${dup ? "motion-reduce:hidden" : ""}`}>
-                    <Image src={c.badge} alt="" className="h-24 w-24 object-contain" />
-                    <span className="max-w-48 text-sm font-medium leading-snug">{c.title}</span>
+          <div className={`${cell} md:col-span-4`}>
+            <Reveal delay={100}>
+              <h3 className={heading}>Stack</h3>
+              <ul className="mt-6 flex flex-wrap gap-2">{profile.stack.map((s) => <li key={s} className={chip}>{s}</li>)}</ul>
+            </Reveal>
+          </div>
+          <div className={`${cell} min-h-64 overflow-hidden md:col-span-4`}>
+            <Image src={jacksonville} alt="" fill sizes="(min-width: 768px) 24rem, 100vw" className="object-cover" />
+            <div aria-hidden className="absolute inset-0 bg-linear-to-t from-black/85 via-black/60 to-black/35" />
+            <Reveal delay={200} className="relative flex h-full flex-col justify-end text-white">
+              <h3 className="text-2xl font-medium tracking-tight">Based in {profile.location}</h3>
+              <p className="mt-2 text-sm text-white/80">The City of Bridges, sun-kissed and thriving.</p>
+            </Reveal>
+          </div>
+          <div className={`${cell} md:col-span-12`}>
+            <Reveal delay={100}>
+              <h3 className={heading}>Certifications</h3>
+              <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
+                {certs.map((c) => (
+                  <li key={c.title} className="flex flex-wrap items-center gap-4 lg:flex-col lg:flex-nowrap lg:items-start">
+                    <Image src={c.badge} alt="" className="h-16 w-16 shrink-0 object-contain" />
+                    <span className="min-w-[min(12ch,100%)] flex-1 text-sm font-medium leading-snug lg:min-w-0">{c.title}</span>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            </Reveal>
           </div>
-        </Card></Reveal>
-        <Reveal className="md:col-span-12" delay={150}><Card className="h-full">
-          <Eyebrow>Latest writing</Eyebrow>
-          <p className="mt-6 text-lg text-white/70">{profile.writing.blurb}</p>
-          <ul className="mt-6 grid gap-4 md:grid-cols-2">
-            {profile.writing.items.map((it) => (
-              <li key={it.href}>
-                <a href={it.href} target="_blank" rel="noreferrer" className="group flex items-start justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 transition-colors hover:bg-white/10">
-                  <span className="font-medium leading-snug underline-offset-4 group-hover:underline">{it.title}</span>
-                  <span className="shrink-0 text-white/40 transition-all group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:text-white"><ArrowUpRight /></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Card></Reveal>
-      </div>
-    </section>
+        </div>
+    </Section>
+  );
+}
+
+export function Writing() {
+  return (
+    <Section id="writing" title={`${profile.writing.title}.`} intro={profile.writing.blurb}>
+      <ul className="border-t border-line">
+        {profile.writing.items.map((it, i) => (
+          <li key={it.href} className="border-b border-line">
+            <Reveal delay={i * 80}>
+              <a href={it.href} target="_blank" rel="noopener noreferrer" className="group grid gap-2 py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10">
+                <span className="text-lg font-medium leading-snug tracking-tight text-balance group-hover:underline md:text-xl">
+                  {it.title}<span className="sr-only"> (opens in new tab)</span>
+                </span>
+                <span className="flex items-center gap-2 text-sm text-muted transition-colors duration-200 group-hover:text-accent">
+                  {new URL(it.href).hostname.replace(/^www\./, "")}
+                  <span className="transition-transform duration-200 group-hover:-translate-y-px group-hover:translate-x-0.5"><ArrowUpRight /></span>
+                </span>
+              </a>
+            </Reveal>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }
